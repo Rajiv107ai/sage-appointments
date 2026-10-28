@@ -1,0 +1,1154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sage – Wellness Consultations</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌿%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f4f7f5;
+  --card: #ffffff;
+  --ink: #16302d;
+  --mut: #5b716d;
+  --line: #dce5e1;
+  --pri: #1f6f6b;
+  --pri-light: #e6f3f1;
+  --pt: #ffffff;
+  --peach: #f8cfb8;
+  --pk: #5c2f16;
+  --bk: #1c5fa8;
+  --bkb: #e1edf9;
+  --dn: #226f3e;
+  --dnb: #ddf2e4;
+  --ns: #b3382b;
+  --nsb: #fbe3df;
+  --wr: #875800;
+  --wrb: #fdefcf;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #101917;
+    --card: #18262a;
+    --ink: #e6f0ed;
+    --mut: #9ab0ab;
+    --line: #28403e;
+    --pri: #4fb3ab;
+    --pri-light: #163330;
+    --pt: #08201e;
+    --peach: #e9a981;
+    --pk: #2d1708;
+    --bk: #8dbdf2;
+    --bkb: #1b2e44;
+    --dn: #7fd69f;
+    --dnb: #1a3426;
+    --ns: #f2958a;
+    --nsb: #412320;
+    --wr: #e8bb68;
+    --wrb: #3a2f17;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #101917;
+  --card: #18262a;
+  --ink: #e6f0ed;
+  --mut: #9ab0ab;
+  --line: #28403e;
+  --pri: #4fb3ab;
+  --pri-light: #163330;
+  --pt: #08201e;
+  --peach: #e9a981;
+  --pk: #2d1708;
+  --bk: #8dbdf2;
+  --bkb: #1b2e44;
+  --dn: #7fd69f;
+  --dnb: #1a3426;
+  --ns: #f2958a;
+  --nsb: #412320;
+  --wr: #e8bb68;
+  --wrb: #3a2f17;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: inherit; }
+html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 16px/1.5 Figtree, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  transition: background 0.2s, color 0.2s;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px);
+  background: var(--bg);
+  z-index: 10;
+}
+button, input, select { font: inherit; color: inherit; }
+
+.top {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 9;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  background: var(--card);
+  border-bottom: 1px solid var(--line);
+}
+.logo {
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--pri);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  letter-spacing: -0.01em;
+}
+.seg {
+  display: flex;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px;
+}
+.seg button {
+  border: 0;
+  background: none;
+  padding: 7px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  color: var(--mut);
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+.seg button.on {
+  background: var(--pri);
+  color: var(--pt);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.demo-banner {
+  background: var(--pri-light);
+  border-bottom: 1px solid var(--line);
+  padding: 8px 16px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  text-align: center;
+}
+.demo-banner b { color: var(--pri); }
+.demo-toggle {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--pri);
+  transition: background 0.15s;
+}
+.demo-toggle:hover { background: var(--line); }
+
+.phone {
+  max-width: 440px;
+  margin: 0 auto;
+  padding: 20px 16px 12px;
+  min-height: calc(100vh - 110px);
+  display: flex;
+  flex-direction: column;
+}
+.wide {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 24px 18px 48px;
+}
+
+h1 {
+  font-size: 28px;
+  line-height: 1.15;
+  margin: 4px 0 6px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+h2 {
+  font-size: 18px;
+  margin: 24px 0 10px;
+  font-weight: 700;
+}
+.mut { color: var(--mut); }
+
+.hero {
+  background: var(--pri);
+  color: var(--pt);
+  border-radius: 28px;
+  padding: 24px;
+  margin: 18px 0 14px;
+  box-shadow: 0 8px 24px rgba(31, 111, 107, 0.18);
+  position: relative;
+  overflow: hidden;
+}
+.hero small {
+  opacity: 0.88;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+.hero .big {
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 8px 0 4px;
+}
+.hero .time {
+  display: inline-block;
+  background: var(--peach);
+  color: var(--pk);
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 4px 15px;
+  margin: 6px 0 16px;
+  font-size: 14px;
+}
+.hero p {
+  margin: 12px 0 0;
+  font-size: 14px;
+  opacity: 0.92;
+  line-height: 1.45;
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.btn, .ghost {
+  border-radius: 999px;
+  padding: 11px 22px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 2px solid transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 15px;
+  transition: all 0.15s ease;
+}
+.btn {
+  background: var(--pri);
+  color: var(--pt);
+}
+.btn:hover { filter: brightness(1.06); }
+.hero .btn {
+  background: var(--pt);
+  color: var(--pri);
+}
+.hero .btn.ok {
+  background: var(--peach);
+  color: var(--pk);
+}
+.ghost {
+  background: none;
+  border-color: currentColor;
+}
+.hero .ghost { color: var(--pt); }
+.btn.full { width: 100%; margin-top: 16px; }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+a { color: var(--pri); font-weight: 600; text-decoration: none; }
+a:hover { text-decoration: underline; }
+:focus-visible { outline: 3px solid var(--peach); outline-offset: 2px; }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 16px;
+  margin-bottom: 12px;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.card .row { justify-content: space-between; }
+
+.client-switcher {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 12px 14px;
+  margin: 14px 0;
+  font-size: 13px;
+}
+.client-chips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+.client-chip {
+  border: 1px solid var(--line);
+  background: var(--bg);
+  border-radius: 999px;
+  padding: 4px 11px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.client-chip.on {
+  background: var(--pri);
+  color: var(--pt);
+  border-color: var(--pri);
+}
+
+.nav {
+  position: sticky;
+  bottom: 0;
+  margin: auto -16px 0;
+  display: flex;
+  background: var(--card);
+  border-top: 1px solid var(--line);
+  box-shadow: 0 -4px 16px rgba(0,0,0,0.03);
+}
+.nav button {
+  flex: 1;
+  border: 0;
+  background: none;
+  padding: 10px 0 12px;
+  cursor: pointer;
+  color: var(--mut);
+  font-weight: 600;
+  font-size: 13px;
+  transition: color 0.15s;
+}
+.nav button b { display: block; font-size: 20px; line-height: 1.2; }
+.nav button.on { color: var(--pri); }
+
+label { display: block; font-weight: 600; margin: 12px 0 4px; font-size: 14px; }
+input, select {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--card);
+  font-size: 15px;
+}
+.days {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  -webkit-overflow-scrolling: touch;
+}
+.chip {
+  flex: 0 0 auto;
+  min-width: 58px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  border-radius: 16px;
+  padding: 8px 6px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.chip small { display: block; color: var(--mut); font-size: 12px; }
+.chip b { font-size: 18px; }
+.chip.on {
+  background: var(--pri);
+  border-color: var(--pri);
+  color: var(--pt);
+}
+.chip.on small { color: var(--pt); }
+
+.slots {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.slot {
+  border: 1px solid var(--line);
+  background: var(--card);
+  border-radius: 12px;
+  padding: 10px 0;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.15s;
+}
+.slot.on {
+  background: var(--pri);
+  color: var(--pt);
+  border-color: var(--pri);
+}
+.slot:disabled {
+  opacity: 0.35;
+  text-decoration: line-through;
+  cursor: not-allowed;
+  background: var(--bg);
+}
+
+.err {
+  background: var(--nsb);
+  color: var(--ns);
+  border-radius: 12px;
+  padding: 10px 14px;
+  margin-top: 12px;
+  font-weight: 600;
+  font-size: 14px;
+}
+.toast {
+  background: var(--dnb);
+  color: var(--dn);
+  border-radius: 14px;
+  padding: 11px 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.badge, .tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: 999px;
+  padding: 3px 12px;
+  font-size: 13px;
+  font-weight: 700;
+}
+.Booked { background: var(--bkb); color: var(--bk); }
+.Done { background: var(--dnb); color: var(--dn); }
+.No-show { background: var(--nsb); color: var(--ns); }
+.Past { background: var(--line); color: var(--mut); }
+.tag { background: var(--dnb); color: var(--dn); }
+.tag.w { background: var(--wrb); color: var(--wr); }
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 16px 0;
+}
+.stats .card {
+  margin: 0;
+  text-align: center;
+  padding: 14px 10px;
+}
+.stats b {
+  font-size: 26px;
+  display: block;
+  color: var(--pri);
+  letter-spacing: -0.02em;
+}
+.stats span { font-size: 13px; color: var(--mut); font-weight: 600; }
+
+.bar {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  margin: 18px 0 12px;
+}
+.bar-filters { display: flex; gap: 8px; }
+.bar .chip { padding: 8px 18px; min-width: 0; border-radius: 999px; }
+
+details {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 14px 18px;
+  margin-bottom: 16px;
+}
+summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--pri);
+  user-select: none;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.r {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1.6fr;
+  gap: 14px;
+  align-items: center;
+}
+.r .st {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-start;
+}
+.sel {
+  width: auto;
+  font-weight: 700;
+  border: 0;
+  border-radius: 999px;
+  padding: 6px 14px;
+  cursor: pointer;
+}
+.wa-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--dn);
+  background: var(--dnb);
+  padding: 4px 12px;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+.wa-link:hover { opacity: 0.85; text-decoration: none; }
+
+.footer-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  color: var(--mut);
+}
+
+@media (max-width: 640px) {
+  .r { grid-template-columns: 1fr 1fr; }
+  .r .st {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .top { flex-wrap: wrap; }
+  .stats b { font-size: 22px; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero { animation: heroIn 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+  @keyframes heroIn { from { opacity: 0; transform: translateY(10px); } }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <span class="logo">🌿 Sage</span>
+  <div class="seg" role="tablist" aria-label="App Mode Switcher">
+    <button data-a="side" data-v="c">Client app</button>
+    <button data-a="side" data-v="d">Nutritionist</button>
+  </div>
+</header>
+
+<div class="demo-banner">
+  <span id="demo-status">📅 Viewing as Demo Date: <b>24 Oct 2026</b> (matches sample data)</span>
+  <button class="demo-toggle" data-a="toggle-date" id="demo-toggle-btn">Switch to Device Date</button>
+</div>
+
+<main id="app"></main>
+
+<script>
+const K = 'sage_appts_v2';
+const RAW = [
+  ['Riya Shah', '98200 11111', '24/10/2026', '10:00', 'Booked'],
+  ['Arjun Mehta', '98200 22222', '2026-10-24', '11:30am', 'Booked'],
+  ['Riya Shah', '9820011111', '25-10-2026', '4 pm', 'Booked'],
+  ['Meera Iyer', '', '23/10/2026', '09:00', 'Done'],
+  ['Kabir Rao', '98200 33333', '22/10/2026', '14:00', 'No-show']
+];
+
+const pad = n => String(n).padStart(2, '0');
+const iso = d => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+
+const nDate = s => {
+  s = (s || '').trim();
+  let m;
+  if (/^\d{4}-\d{2}-\d{2}$/.test(s)) return s;
+  if (m = s.match(/^(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})$/)) return m[3] + '-' + pad(m[2]) + '-' + pad(m[1]);
+  return '';
+};
+
+const nTime = s => {
+  const m = (s || '').trim().toLowerCase().match(/^(\d{1,2})(?::(\d{2}))?\s*(am|pm)?$/);
+  if (!m) return '';
+  let h = +m[1];
+  if (m[3] === 'pm' && h < 12) h += 12;
+  if (m[3] === 'am' && h === 12) h = 0;
+  return pad(h) + ':' + pad(+(m[2] || 0));
+};
+
+const nPhone = s => {
+  let d = (s || '').replace(/\D/g, '');
+  if (d.length === 12 && d.startsWith('91')) d = d.slice(2);
+  return d.length === 10 ? d : '';
+};
+
+const fPhone = p => p ? p.slice(0, 5) + ' ' + p.slice(5) : 'No phone';
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+const SLOTS = [];
+for (let h = 9; h < 18; h++) {
+  SLOTS.push(pad(h) + ':00', pad(h) + ':30');
+}
+
+const fD = d => new Date(d + 'T00:00').toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short' });
+const fT = t => {
+  if (!t) return '';
+  const [h, m] = t.split(':').map(Number);
+  return (h % 12 || 12) + ':' + pad(m) + ' ' + (h < 12 ? 'AM' : 'PM');
+};
+
+let useDemoDate = true;
+const getNow = () => useDemoDate ? new Date('2026-10-24T08:30:00') : new Date();
+
+const dt = a => new Date(a.date + 'T' + a.time);
+const past = a => dt(a) < getNow();
+const byDT = (a, b) => dt(a) - dt(b);
+const first = n => (n || '').split(' ')[0];
+const $ = s => document.querySelector(s);
+
+const initData = () => RAW.map((r, i) => ({
+  id: 's' + i,
+  name: r[0],
+  phone: nPhone(r[1]),
+  date: nDate(r[2]),
+  time: nTime(r[3]),
+  status: r[4],
+  conf: r[4] === 'Booked' && i === 0 // sample initial confirmation for demo
+}));
+
+const load = () => {
+  try {
+    const r = localStorage.getItem(K);
+    if (r) return JSON.parse(r);
+  } catch (e) {}
+  return null;
+};
+const save = () => {
+  try { localStorage.setItem(K, JSON.stringify(A)); } catch (e) {}
+};
+
+let A = load() || initData();
+save();
+
+const S = {
+  side: 'c',
+  tab: 'home',
+  filter: 'all',
+  me: '9820011111',
+  date: '',
+  time: '',
+  rid: null,
+  cx: null,
+  msg: '',
+  err: '',
+  derr: '',
+  open: false
+};
+
+const taken = (d, t, ign) => A.some(a => a.date === d && a.time === t && a.id !== ign);
+const free = (d, t, ign) => !taken(d, t, ign) && new Date(d + 'T' + t) > getNow();
+
+const mine = () => A.filter(a => a.phone && a.phone === S.me);
+const upc = () => mine().filter(a => a.status === 'Booked' && !past(a)).sort(byDT);
+
+function home() {
+  const u = upc();
+  const n = u[0];
+  const currentClient = mine()[0];
+  const nm = currentClient ? first(currentClient.name) : 'there';
+
+  return `
+    <h1>Hello, ${esc(nm)} 🌿</h1>
+    <p class="mut">Small steps, steady health.</p>
+
+    ${n ? `
+      <div class="hero">
+        <small>Your next consultation</small>
+        <div class="big">${fD(n.date)}</div>
+        <span class="time">${fT(n.time)}</span>
+        <div class="row">
+          <button class="btn ${n.conf ? 'ok' : ''}" data-a="conf" data-v="${n.id}">
+            ${n.conf ? '✓ You’re confirmed' : 'I’ll be there'}
+          </button>
+          <button class="ghost" data-a="rs" data-v="${n.id}">Reschedule</button>
+        </div>
+        <p>Can’t make it? Reschedule early so someone else can take your slot.</p>
+      </div>
+    ` : `
+      <div class="hero">
+        <div class="big">No visit planned</div>
+        <p>Book a quick consultation whenever you’re ready.</p>
+        <div class="row" style="margin-top:14px">
+          <button class="btn" data-a="tab" data-v="book">Book a consultation</button>
+        </div>
+      </div>
+    `}
+
+    <div class="client-switcher">
+      <div class="mut">Active profile: <b>${fPhone(S.me)}</b> (${esc(currentClient ? currentClient.name : 'Unknown')})</div>
+      <div class="client-chips">
+        <span style="align-self:center;margin-right:4px">Switch client:</span>
+        <button class="client-chip ${S.me === '9820011111' ? 'on' : ''}" data-a="quick-me" data-v="9820011111">Riya Shah</button>
+        <button class="client-chip ${S.me === '9820022222' ? 'on' : ''}" data-a="quick-me" data-v="9820022222">Arjun Mehta</button>
+        <button class="client-chip ${S.me === '9820033333' ? 'on' : ''}" data-a="quick-me" data-v="9820033333">Kabir Rao</button>
+        <button class="client-chip" data-a="chg">Other...</button>
+      </div>
+      ${S.chg ? `
+        <div class="row" style="margin-top:10px">
+          <input data-k="mp" inputmode="tel" placeholder="Enter 10-digit phone" style="flex:1">
+          <button class="ghost" style="color:var(--pri)" data-a="setme">Show</button>
+        </div>
+      ` : ''}
+    </div>
+  `;
+}
+
+function bookV() {
+  const r = S.rid && A.find(a => a.id === S.rid);
+  if (S.nm === undefined) S.nm = (mine()[0] || {}).name || '';
+  if (S.ph === undefined) S.ph = S.me;
+
+  const ref = getNow();
+  const days = [...Array(14)].map((_, i) => {
+    const d = new Date(ref);
+    d.setDate(d.getDate() + i);
+    return iso(d);
+  });
+
+  if (!S.date || !days.includes(S.date)) {
+    S.date = days.find(d => SLOTS.some(t => free(d, t, S.rid))) || days[0];
+  }
+
+  return `
+    <h1>${r ? 'Pick a new time' : 'Book a consultation'}</h1>
+    <p class="mut">${r ? 'Your old slot is freed once you confirm.' : 'Choose a day and time that suits you.'}</p>
+
+    <h2>Day</h2>
+    <div class="days">
+      ${days.map(d => {
+        const x = new Date(d + 'T00:00');
+        return `
+          <button class="chip ${d === S.date ? 'on' : ''}" data-a="d" data-v="${d}">
+            <small>${x.toLocaleDateString('en-IN', { weekday: 'short' })}</small>
+            <b>${x.getDate()}</b>
+          </button>
+        `;
+      }).join('')}
+    </div>
+
+    <h2>Time</h2>
+    <div class="slots">
+      ${SLOTS.map(t => `
+        <button class="slot ${t === S.time ? 'on' : ''}" ${free(S.date, t, S.rid) ? '' : 'disabled'} data-a="t" data-v="${t}">
+          ${fT(t)}
+        </button>
+      `).join('')}
+    </div>
+    <p class="mut" style="font-size:13px;margin-top:6px">Crossed-out times are already taken or in the past.</p>
+
+    ${r ? '' : `
+      <label for="nm">Your name</label>
+      <input id="nm" data-k="nm" value="${esc(S.nm)}" autocomplete="name" placeholder="Full name">
+      <label for="ph">Phone number</label>
+      <input id="ph" data-k="ph" value="${esc(S.ph)}" inputmode="tel" autocomplete="tel" placeholder="10-digit mobile number">
+    `}
+
+    ${S.err ? `<div class="err">${esc(S.err)}</div>` : ''}
+    <button class="btn full" data-a="go">${r ? 'Confirm new time' : 'Confirm booking'}</button>
+  `;
+}
+
+function minev() {
+  const L = mine().sort(byDT);
+  const u = upc();
+  const p = L.filter(a => !u.includes(a)).reverse();
+
+  return `
+    <h1>Your visits</h1>
+    <h2>Upcoming</h2>
+    ${u.length ? u.map(a => `
+      <div class="card">
+        <div class="row">
+          <div>
+            <b>${fD(a.date)}</b>
+            <div class="mut">${fT(a.time)}</div>
+          </div>
+          <span class="badge Booked">Booked</span>
+        </div>
+        <div class="row" style="margin-top:12px">
+          <button class="ghost" style="color:var(--pri)" data-a="rs" data-v="${a.id}">Reschedule</button>
+          <button class="ghost" style="color:var(--ns)" data-a="cx" data-v="${a.id}">
+            ${S.cx === a.id ? 'Tap again to cancel' : 'Cancel'}
+          </button>
+        </div>
+      </div>
+    `).join('') : `
+      <p class="mut">Nothing coming up. <a href="#" data-a="tab" data-v="book">Book a visit</a></p>
+    `}
+
+    <h2>Past</h2>
+    ${p.length ? p.map(a => {
+      const s = a.status === 'Booked' ? 'Past' : a.status;
+      return `
+        <div class="card">
+          <div class="row">
+            <div>
+              <b>${fD(a.date)}</b>
+              <div class="mut">${fT(a.time)}</div>
+            </div>
+            <span class="badge ${s}">${s}</span>
+          </div>
+        </div>
+      `;
+    }).join('') : `
+      <p class="mut">Your past visits will show up here.</p>
+    `}
+  `;
+}
+
+function client() {
+  const m = S.msg;
+  S.msg = '';
+  const body = S.tab === 'home' ? home() : S.tab === 'book' ? bookV() : minev();
+
+  return `
+    <div class="phone">
+      ${m ? `<div class="toast">${m}</div>` : ''}
+      ${body}
+      <nav class="nav">
+        ${[
+          ['home', 'Home', '⌂'],
+          ['book', 'Book', '＋'],
+          ['mine', 'Visits', '☰']
+        ].map(x => `
+          <button class="${S.tab === x[0] ? 'on' : ''}" data-a="tab" data-v="${x[0]}">
+            <b>${x[2]}</b>${x[1]}
+          </button>
+        `).join('')}
+      </nav>
+    </div>
+  `;
+}
+
+function dash() {
+  const t = iso(getNow());
+  let L = [...A].sort(byDT);
+  const all = L;
+  if (S.filter === 'today') L = L.filter(a => a.date === t);
+
+  const dn = all.filter(a => a.status === 'Done').length;
+  const ns = all.filter(a => a.status === 'No-show').length;
+
+  S.fd = S.fd || t;
+  S.ft = S.ft || '10:00';
+  S.fs = S.fs || 'Booked';
+
+  const opt = (arr, x) => arr.map(v => `<option ${v === x ? 'selected' : ''}>${v}</option>`).join('');
+
+  return `
+    <div class="wide">
+      <h1>Today’s clinic</h1>
+      <p class="mut">Real-time sync: client bookings appear here instantly, and status updates sync back to their app.</p>
+
+      <div class="stats">
+        <div class="card">
+          <b>${all.filter(a => a.date === t).length}</b>
+          <span>Today (${fD(t)})</span>
+        </div>
+        <div class="card">
+          <b>${all.filter(a => a.status === 'Booked').length}</b>
+          <span>Total Booked</span>
+        </div>
+        <div class="card">
+          <b>${dn + ns ? Math.round(ns / (dn + ns) * 100) + '%' : '–'}</b>
+          <span>No-show rate</span>
+        </div>
+      </div>
+
+      <details ${S.open ? 'open' : ''} data-a="det">
+        <summary>+ Add an appointment by hand</summary>
+        <div class="grid">
+          <div><label>Client name</label><input data-k="fn" value="${esc(S.fn || '')}" placeholder="Full name"></div>
+          <div><label>Phone (optional)</label><input data-k="fp" inputmode="tel" value="${esc(S.fp || '')}" placeholder="10 digits"></div>
+          <div><label>Date</label><input type="date" data-k="fd" value="${S.fd}"></div>
+          <div><label>Time</label><select data-k="ft">${opt(SLOTS, S.ft)}</select></div>
+          <div><label>Status</label><select data-k="fs">${opt(['Booked', 'Done', 'No-show'], S.fs)}</select></div>
+        </div>
+        ${S.derr ? `<div class="err">${esc(S.derr)}</div>` : ''}
+        <button class="btn" style="margin-top:14px" data-a="add">Add appointment</button>
+      </details>
+
+      <div class="bar">
+        <div class="bar-filters">
+          <button class="chip ${S.filter === 'all' ? 'on' : ''}" data-a="f" data-v="all">All (${all.length})</button>
+          <button class="chip ${S.filter === 'today' ? 'on' : ''}" data-a="f" data-v="today">Today (${all.filter(a => a.date === t).length})</button>
+        </div>
+        <button class="demo-toggle" data-a="reset-data">↺ Reset Sample Data</button>
+      </div>
+
+      ${L.length ? L.map(a => {
+        const isPast = past(a);
+        const over = a.status === 'Booked' && isPast;
+        const wa = a.status === 'Booked' && a.phone;
+        const waText = encodeURIComponent(
+          `Hi ${first(a.name)}, reminder for your consultation on ${fD(a.date)} at ${fT(a.time)}. Reply YES to confirm or let me know to reschedule.`
+        );
+
+        return `
+          <div class="card r">
+            <div>
+              <b>${esc(a.name)}</b><br>
+              ${a.phone ? `<a href="tel:${a.phone}">${fPhone(a.phone)}</a>` : '<span class="mut">No phone</span>'}
+            </div>
+            <div>
+              ${fD(a.date)}<br>
+              <span class="mut">${fT(a.time)}</span>
+            </div>
+            <div class="st">
+              <select class="sel ${a.status}" data-a="st" data-v="${a.id}" aria-label="Status for ${esc(a.name)}">
+                ${opt(['Booked', 'Done', 'No-show'], a.status)}
+              </select>
+              ${a.conf && a.status === 'Booked' ? '<span class="tag">✓ Client confirmed</span>' : ''}
+              ${over ? '<span class="tag w">Past: please update</span>' : ''}
+              ${wa ? `
+                <a class="wa-link" href="https://wa.me/91${a.phone}?text=${waText}" target="_blank" rel="noopener">
+                  💬 Remind on WhatsApp
+                </a>
+              ` : ''}
+            </div>
+          </div>
+        `;
+      }).join('') : `
+        <div class="card mut" style="text-align:center;padding:28px">
+          ${S.filter === 'today' ? 'No appointments today. Switch to All or add one above.' : 'No appointments yet.'}
+        </div>
+      `}
+
+      <div class="footer-actions">
+        <span>Shared data stored locally in browser. Syncs live across tabs.</span>
+        <button class="demo-toggle" data-a="reset-data">Reset to initial 5 sample rows</button>
+      </div>
+    </div>
+  `;
+}
+
+function render() {
+  document.querySelectorAll('.seg button').forEach(b => b.classList.toggle('on', b.dataset.v === S.side));
+  const bannerText = $('#demo-status');
+  const toggleBtn = $('#demo-toggle-btn');
+  if (bannerText && toggleBtn) {
+    if (useDemoDate) {
+      bannerText.innerHTML = '📅 Viewing as Demo Date: <b>24 Oct 2026</b> (matches sample data)';
+      toggleBtn.textContent = 'Switch to Device Date';
+    } else {
+      const real = new Date();
+      bannerText.innerHTML = `🕒 Viewing with Device Date: <b>${fD(iso(real))}</b>`;
+      toggleBtn.textContent = 'Switch to Sample Date (24 Oct 2026)';
+    }
+  }
+  $('#app').innerHTML = S.side === 'c' ? client() : dash();
+}
+
+function mut(fn) {
+  A = load() || A;
+  fn();
+  save();
+  render();
+}
+
+function go() {
+  A = load() || A;
+  const ex = S.rid && A.find(a => a.id === S.rid);
+  const name = ex ? ex.name : (S.nm || '').trim();
+  const rawPh = ex ? (ex.phone || '') : (S.ph || '').trim();
+  const ph = ex ? ex.phone : nPhone(rawPh);
+
+  const e = !name ? 'Please add your name.' :
+    (!ex && !ph) ? 'Enter a valid 10-digit phone number.' :
+    (rawPh && !ph) ? 'Enter a valid 10-digit phone number.' :
+    !S.time ? 'Pick a time to continue.' :
+    taken(S.date, S.time, S.rid) ? 'That slot was just taken. Please pick another.' : '';
+
+  if (e) {
+    S.err = e;
+    return render();
+  }
+
+  if (ex) {
+    ex.date = S.date;
+    ex.time = S.time;
+    ex.conf = false;
+  } else {
+    A.push({
+      id: 'a' + Date.now(),
+      name,
+      phone: ph,
+      date: S.date,
+      time: S.time,
+      status: 'Booked',
+      conf: false
+    });
+  }
+
+  save();
+  if (ph) S.me = ph;
+  S.err = '';
+  S.rid = null;
+  S.time = '';
+  S.date = '';
+  S.tab = 'home';
+  S.msg = 'You’re booked. See you soon!';
+  render();
+}
+
+function add() {
+  A = load() || A;
+  const raw = (S.fp || '').trim();
+  const ph = nPhone(raw);
+  const name = (S.fn || '').trim();
+
+  const e = !name ? 'Enter the client’s name.' :
+    raw && !ph ? 'Phone must be 10 digits, or leave it empty.' :
+    !S.fd ? 'Choose a date.' :
+    taken(S.fd, S.ft, null) ? 'That date and time is already booked.' : '';
+
+  if (e) {
+    S.derr = e;
+    return render();
+  }
+
+  A.push({
+    id: 'a' + Date.now(),
+    name,
+    phone: ph,
+    date: S.fd,
+    time: S.ft,
+    status: S.fs,
+    conf: false
+  });
+  save();
+  S.fn = '';
+  S.fp = '';
+  S.derr = '';
+  render();
+}
+
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-a]');
+  if (!b || b.tagName === 'SELECT' || b.tagName === 'DETAILS') return;
+  const a = b.dataset.a, v = b.dataset.v;
+  if (b.tagName === 'A' && b.href.endsWith('#')) e.preventDefault();
+
+  if (a === 'side') { S.side = v; render(); }
+  else if (a === 'tab') { S.tab = v; S.rid = null; S.err = ''; S.cx = null; render(); }
+  else if (a === 'd') { S.date = v; S.time = ''; render(); }
+  else if (a === 't') { S.time = v; render(); }
+  else if (a === 'go') { go(); }
+  else if (a === 'rs') { S.rid = v; S.date = ''; S.time = ''; S.tab = 'book'; render(); }
+  else if (a === 'cx') {
+    if (S.cx === v) {
+      S.cx = null;
+      mut(() => { A = A.filter(x => x.id !== v); });
+    } else {
+      S.cx = v;
+      render();
+    }
+  }
+  else if (a === 'conf') {
+    mut(() => {
+      const x = A.find(y => y.id === v);
+      if (x) x.conf = !x.conf;
+    });
+  }
+  else if (a === 'chg') { S.chg = !S.chg; render(); }
+  else if (a === 'quick-me') {
+    S.me = v;
+    S.nm = undefined;
+    S.ph = undefined;
+    S.chg = false;
+    render();
+  }
+  else if (a === 'setme') {
+    const p = nPhone(S.mp);
+    if (p) {
+      S.me = p;
+      S.chg = false;
+      S.nm = undefined;
+      S.ph = undefined;
+    }
+    render();
+  }
+  else if (a === 'f') { S.filter = v; render(); }
+  else if (a === 'add') { add(); }
+  else if (a === 'toggle-date') {
+    useDemoDate = !useDemoDate;
+    S.date = '';
+    S.time = '';
+    render();
+  }
+  else if (a === 'reset-data') {
+    if (confirm('Reset appointments back to the original 5 sample records?')) {
+      A = initData();
+      save();
+      S.me = '9820011111';
+      render();
+    }
+  }
+});
+
+document.addEventListener('input', e => {
+  const k = e.target.dataset.k;
+  if (k) S[k] = e.target.value;
+});
+
+document.addEventListener('change', e => {
+  const t = e.target;
+  if (t.dataset.a === 'st') {
+    mut(() => {
+      const x = A.find(y => y.id === t.dataset.v);
+      if (x) x.status = t.value;
+    });
+  }
+});
+
+document.addEventListener('toggle', e => {
+  if (e.target.tagName === 'DETAILS') S.open = e.target.open;
+}, true);
+
+window.addEventListener('storage', e => {
+  if (e.key === K) {
+    A = load() || A;
+    render();
+  }
+});
+
+render();
+</script>
+</body>
+</html>
