@@ -639,7 +639,7 @@ const initData = () => RAW.map((r, i) => ({
   date: nDate(r[2]),
   time: nTime(r[3]),
   status: r[4],
-  conf: r[4] === 'Booked' && i === 0 // sample initial confirmation for demo
+  conf: false
 }));
 
 const load = () => {
