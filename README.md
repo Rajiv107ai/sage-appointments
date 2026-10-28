@@ -1,5 +1,8 @@
 # Sage: appointments app
 
+- **Live Link**: https://rajiv107ai.github.io/sage-appointments/
+- **GitHub**: https://github.com/Rajiv107ai/sage-appointments
+
 A small appointments app for a nutritionist. It has two views that use the same data: a client app (made for phones) and a nutritionist dashboard.
 
 ## How to run
